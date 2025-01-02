@@ -30,6 +30,7 @@ export class AppComponent {
   reset(){
     this.employeeObj = new EmployeeModel();
     this.createForm();
+    this.isEditMode = false;
   }
 
   createForm(){
