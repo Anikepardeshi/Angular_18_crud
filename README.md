@@ -25,29 +25,3 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-
-
-## Bootstrap Documentation
-
-Sizes => xxl xl lg ms sm xs 
-
-xxl -> >= 1400px
-xl  -> >= 1200px - 1399px
-lg  -> >= 992px  - 1199px
-md  -> >= 768px  - 991px
-sm  -> >= 576px  - 767px
-xs  -> >= opx    - 575px
-
-## Bootstrap Containers
-![alt text](image.png)
-
-/* media query used to fix the size to 1150 px when min-width is greater than 1400px */
-@media (min-width: 1400px) {
-    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-        max-width: 1150px;
-    }
-}
-
-## Botstrap Grid
-
-
