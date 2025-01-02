@@ -20,10 +20,22 @@
                   <th>Name</th>
                   <th>Contact No</th>
                   <th>Email-Id</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-
+                @for (item of employeeList; track $index) {
+                  <tr class="text-center" >
+                    <td >{{$index + 1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.contactNo}}</td>
+                    <td>{{item.emailId}}</td>
+                    <td class="text-center">
+                      <button class="btn btn-primary" (click)="onEdit(item)">Edit</button>
+                      <button class="btn btn-danger mx-2" (click)="onDelete(item.empId)">Delete</button>
+                    </td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>
@@ -38,44 +50,68 @@
         New Employee
       </div>
         <div class="card-body">
-          <div class="row">
-            <div class="col-12 ">
-              <label for="">Name</label>
-              <input type="text" class="form-control" placeholder="Enter Name">
+          <form [formGroup]="employeeForm">
+            <div class="row">
+              <div class="col-12 ">
+                <label for="">Name</label>
+                <input type="text" formControlName="name" class="form-control" placeholder="Enter Name">
+                <div class="text-danger" *ngIf="employeeForm.get('name')?.touched">
+                  <span *ngIf="employeeForm.get('name')?.hasError('required')">Name is required</span>
+                  <span *ngIf="employeeForm.get('name')?.hasError('minlength')">Minimum 3 characters required</span>
+                  <span *ngIf="employeeForm.get('name')?.hasError('maxlength')">Maximum 50 characters allowed</span>
+                </div>
+              </div>
+              <div class="col-6 my-1 ">
+                <label for="">Email-Id</label>
+                <input type="text" formControlName="emailId" class="form-control" placeholder="Enter Email">
+                <div class="text-danger" *ngIf="employeeForm.get('emailId')?.touched">
+                  <span *ngIf="employeeForm.get('emailId')?.hasError('required')">Email-Id is required</span>
+                  <span *ngIf="employeeForm.get('emailId')?.hasError('email')">Invalid Email format</span>
+                </div>
+              </div>
+              <div class="col-6 my-1">
+                <label for="">Contact-No</label>
+                <input type="text" formControlName="contactNo" class="form-control" placeholder="Enter Contact No" >
+                <div class="text-danger" *ngIf="employeeForm.get('contactNo')?.touched">
+                  <span *ngIf="employeeForm.get('contactNo')?.hasError('required')">Contact Number is required</span>
+                  <span *ngIf="employeeForm.get('contactNo')?.hasError('pattern')">Contact Number must be exactly 10 digits</span>
+                </div>
+              </div>
+              <div class="col-6 my-1">
+                <label for="">City</label>
+                <input type="text" formControlName="city"class="form-control" placeholder="Enter City">
+              </div>
+              <div class="col-6 my-1">
+                <label for="">State</label>
+                <input type="text" formControlName="state" class="form-control" placeholder="Enter State">
+              </div>
+              <div class="col-6 my-1">
+                <label for="">Pin Code</label>
+                <input type="text" formControlName="pinCode" class="form-control" placeholder="Enter Pin Code">
+                <div class="text-danger" *ngIf="employeeForm.get('pinCode')?.touched">
+                  <span *ngIf="employeeForm.get('pinCode')?.hasError('required')">Pin Code is required</span>
+                  <span *ngIf="employeeForm.get('pinCode')?.hasError('pattern')">Pin Code must be 6 digits</span>
+                </div>
+              </div>
+              <div class="col-12 my-1">
+                <label for="address">Address</label>
+                <textarea formControlName="address" class="form-control" placeholder="Enter address"></textarea>
+              </div>
             </div>
-            <div class="col-6 my-1 ">
-              <label for="">Email-Id</label>
-              <input type="text" class="form-control" placeholder="Enter Email">
+            <div class="row mt-3">
+              <div class="col-6 my-1 text-center">
+                <button class="btn btn-secondary" type="button" (click)="reset()">Reset</button>
+              </div>
+              <div class="col-6 my-1 text-center">
+                @if (isEditMode == false ) {
+                  <button class="btn btn-success" type="button" [disabled]="employeeForm.invalid" (click)="onSave()">Save Employee</button>
+                }@else{
+                  <button class="btn btn-warning" type="button" [disabled]="employeeForm.invalid" (click)="onUpdate()">Update Employee</button>
+                }
+              </div>
             </div>
-            <div class="col-6 my-1">
-              <label for="">Contact-No</label>
-              <input type="text" class="form-control" placeholder="Enter Contact No">
-            </div>
-            <div class="col-6 my-1">
-              <label for="">City</label>
-              <input type="text" class="form-control" placeholder="Enter City">
-            </div>
-            <div class="col-6 my-1">
-              <label for="">State</label>
-              <input type="text" class="form-control" placeholder="Enter State">
-            </div>
-            <div class="col-6 my-1">
-              <label for="">Pin Code</label>
-              <input type="text" class="form-control" placeholder="Enter Pin Code">
-            </div>
-            <div class="col-12 my-1">
-              <label for="address">Address</label>
-              <textarea class="form-control" placeholder="Enter address"></textarea>
-            </div>
-          </div>
-          <div class="row mt-3">
-            <div class="col-6 my-1 text-center">
-              <button class="btn btn-secondary">Reset</button>
-            </div>
-            <div class="col-6 my-1 text-center">
-              <button class="btn btn-success">Save Employee</button>
-            </div>
-          </div>
+          </form>
+
         </div>
 
     </div>
@@ -83,3 +119,4 @@
 </div>
 
 
+<router-outlet></router-outlet>
